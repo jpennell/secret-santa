@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block page_title %}Exchanges{% endblock %}
+
+{% block content %}
+
+    <a href="{% url 'exchange-create' %}">Add Exchange</a>
+
+    {% if exchanges %}
+        <ul>
+            {% for exchange in exchanges %}
+                <li><a href="{% url 'exchange-edit' exchange.id %}">{{ exchange.name }}</a></li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>You haven't added any exchanges yet.</p>
+    {% endif %}
+
+{% endblock%}
