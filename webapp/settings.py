@@ -18,6 +18,9 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'south',
+    'debug_toolbar',
+    'webapp.apps.exchange',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -27,13 +30,15 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 )
 
 ROOT_URLCONF = 'webapp.urls'
 
 WSGI_APPLICATION = 'webapp.wsgi.application'
 
-DATABASES['default'] =  dj_database_url.config()
+DATABASES = { }
+DATABASES = {'default': dj_database_url.config(default=os.environ['DATABASE_URL'])}
 
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
