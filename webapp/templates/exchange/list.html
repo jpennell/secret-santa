@@ -6,10 +6,10 @@
 
     <a href="{% url 'exchange-create' %}">Add Exchange</a>
 
-    {% if exchanges %}
+    {% if user_exchanges %}
         <ul>
-            {% for exchange in exchanges %}
-                <li><a href="{% url 'exchange-edit' exchange.id %}">{{ exchange.name }}</a></li>
+            {% for user_exchange in user_exchanges %}
+                <li><a href="{% url 'exchange-edit' user_exchange.exchange.id %}">{{ user_exchange.exchange.name }}</a></li>
             {% endfor %}
         </ul>
     {% else %}

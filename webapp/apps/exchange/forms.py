@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from webapp.apps.exchange.models import Exchange
+from webapp.apps.exchange.models import Exchange, UserExchange
 
 
 class ExchangeForm(ModelForm):
@@ -12,5 +12,10 @@ class ExchangeForm(ModelForm):
         exchange.user = user
         if commit:
             exchange.save()
+            user_exchange = UserExchange()
+            user_exchange.user = user
+            user_exchange.exchange = exchange
+            user_exchange.save()
+
         return exchange
 

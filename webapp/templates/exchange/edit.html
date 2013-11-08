@@ -14,4 +14,14 @@
         <a href="{% url 'exchange-list' %}" class="muted">Cancel</a>
     </form>
 
+    <h2>People</h2>
+
+    {% if user_exchanges %}
+        <ul>
+            {% for user_exchange in user_exchanges %}
+                <li>{{ user_exchange.user.email }}</a></li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
 {% endblock%}

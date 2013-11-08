@@ -10,8 +10,8 @@ from webapp.apps.exchange.models import Exchange
 @render_to('exchange/list.html')
 @login_required
 def list(request):
-    exchanges = request.user.exchanges.all()
-    return {'exchanges': exchanges}
+    user_exchanges = request.user.userexchange_set.all()
+    return {'user_exchanges': user_exchanges}
 
 
 @render_to('exchange/create.html')
@@ -45,7 +45,9 @@ def edit(request, exchange_id):
     else :
         form = ExchangeForm(instance=exchange)
 
-    return {'form': form, 'exchange': exchange}
+    user_exchanges = exchange.userexchange_set.all()
+
+    return {'form': form, 'exchange': exchange, 'user_exchanges': user_exchanges}
 
 
 @login_required
