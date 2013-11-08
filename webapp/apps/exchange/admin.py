@@ -1,3 +1,4 @@
 from django.contrib import admin
+from webapp.apps.exchange.models import Exchange
 
-# Register your models here.
+admin.site.register(Exchange)
