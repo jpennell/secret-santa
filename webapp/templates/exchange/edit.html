@@ -16,6 +16,8 @@
 
     <h2>People</h2>
 
+    <a href="{% url 'exchange-users-create' exchange.id %}">Add Person</a>
+
     {% if user_exchanges %}
         <ul>
             {% for user_exchange in user_exchanges %}

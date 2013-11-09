@@ -1,11 +1,14 @@
+import logging
+
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, get_object_or_404
 
 from annoying.decorators import render_to
 
-from webapp.apps.exchange.forms import ExchangeForm
+from webapp.apps.exchange.forms import ExchangeForm, UserExchangeForm
 from webapp.apps.exchange.models import Exchange
 
+logger = logging.getLogger(__name__)
 
 @render_to('exchange/list.html')
 @login_required
@@ -57,3 +60,23 @@ def delete(request, exchange_id):
     exchange.delete()
 
     return redirect('exchange-list')
+
+
+@render_to('exchange/user/create.html')
+@login_required
+def create_user_exchange(request, exchange_id):
+
+    logger.info('create_user_exchange')
+
+    exchange = get_object_or_404(Exchange, pk=exchange_id)
+
+    if request.method == 'POST':
+        form = UserExchangeForm(request.POST)
+
+        if form.is_valid():
+            user_exchange = form.save(exchange=exchange)
+            return redirect('exchange-edit', exchange.id)
+    else :
+        form = UserExchangeForm()
+
+    return {'form': form, 'exchange': exchange}

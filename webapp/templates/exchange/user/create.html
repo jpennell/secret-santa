@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% load bootstrap3 %}
+
+{% block page_title %}Add Person{% endblock %}
+
+{% block content %}
+
+    <form method="post" action="{% url 'exchange-users-create' exchange.id %}">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        <button type="submit" class="btn btn-primary">Add Person</button>
+        <a href="{% url 'exchange-edit' exchange.id %}" class="muted">Cancel</a>
+    </form>
+
+{% endblock %}
