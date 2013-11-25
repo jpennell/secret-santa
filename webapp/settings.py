@@ -1,5 +1,6 @@
 import os
 import dj_database_url
+import logging
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -106,4 +107,15 @@ STATICFILES_DIRS = (
 
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'templates'),
+)
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = os.environ['EMAIL_HOST']
+EMAIL_PORT = os.environ['EMAIL_PORT']
+EMAIL_HOST_USER = os.environ['EMAIL_HOST_USER']
+EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']
+EMAIL_FROM = os.environ['EMAIL_FROM']
+
+logging.basicConfig(
+    level = logging.INFO
 )

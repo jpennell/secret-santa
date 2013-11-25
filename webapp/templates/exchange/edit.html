@@ -10,8 +10,20 @@
         {% csrf_token %}
         {% bootstrap_form form %}
         <button type="submit" class="btn btn-primary">Edit Exchange</button>
-        <a href="{% url 'exchange-delete' exchange.id %}" class="btn btn-danger" onclick='return confirm("Delete this exchange?")'>Delete Exchange</a>
-        <a href="{% url 'exchange-list' %}" class="muted">Cancel</a>
+    </form>
+
+    <a href="{% url 'exchange-delete' exchange.id %}" class="btn btn-danger" onclick='return confirm("Delete this exchange?")'>Delete Exchange</a>
+    <a href="{% url 'exchange-list' %}" class="muted">Cancel</a>
+
+    <form method="post" action="{% url 'exchange-start' exchange.id %}">
+        {% csrf_token %}
+        <button type="submit" class="btn {% if exchange.state == 'STARTED' %}btn-danger{% else %}btn-primary{% endif %}">
+            {% if exchange.state == 'STARTED' %}
+                Re-generate
+            {% else %}
+                Generate
+            {% endif %}
+        </button>
     </form>
 
     <h2>People</h2>
@@ -21,9 +33,43 @@
     {% if user_exchanges %}
         <ul>
             {% for user_exchange in user_exchanges %}
-                <li>{{ user_exchange.user.email }}</a></li>
+                <li>
+                    {% if user_exchange.user.first_name and user_exchange.user.last_name %}
+                        {{user_exchange.user.first_name}} {{user_exchange.user.last_name}} ({{ user_exchange.user.email }})
+                    {% else %}
+                        {{ user_exchange.user.email }}
+                    {% endif %}
+                </li>
             {% endfor %}
         </ul>
     {% endif %}
+
+    <h2>Exclusions</h2>
+
+    <a href="{% url 'exchange-users-exclusion-create' exchange.id %}">Add Exclusion</a>
+
+    {% if user_exchange_exclusions %}
+        <ul>
+            {% for exclusion in user_exchange_exclusions %}
+
+                <li>
+                    {% if exclusion.user_exchange1.user.first_name and exclusion.user_exchange1.user.last_name %}
+                        {{exclusion.user_exchange1.user.first_name}} {{exclusion.user_exchange1.user.last_name}} ({{ exclusion.user_exchange1.user.email }})
+                    {% else %}
+                        {{ exclusion.user_exchange1.user.email }}
+                    {% endif %}
+
+                    ->
+
+                    {% if exclusion.user_exchange2.user.first_name and exclusion.user_exchange2.user.last_name %}
+                        {{exclusion.user_exchange2.user.first_name}} {{exclusion.user_exchange2.user.last_name}} ({{ exclusion.user_exchange2.user.email }})
+                    {% else %}
+                        {{ exclusion.user_exchange2.user.email }}
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
 
 {% endblock%}
